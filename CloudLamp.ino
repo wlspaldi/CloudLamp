@@ -21,7 +21,15 @@ CRGB blueSine(int x, int y, int progress) {
 }
 
 CRGB gradientSine(int x, int y, int progress) {
-
+  CRGB newColor;
+  CRGB first = CRGB::Blue;
+  CRGB second = CRGB::Orange;
+  float prog = 2 * (float)(progress + (X_OFFSET * x)) / (float)INTERVAL;
+  float sine = 0.5 * (sin(3.14 * prog) + 1);
+  newColor.red = (first.red * sine + second.red * (1 - sine)) * 0.5;
+  newColor.green = (first.green * sine + second.green * (1 - sine)) * 0.5;
+  newColor.blue = (first.blue * sine + second.blue * (1 - sine)) * 0.5;
+  return newColor;
 }
 
 void setup() {
@@ -32,7 +40,7 @@ void setup() {
   MsTimer2::start();
   //clearStrip();
   cloud.initializeAllSame(CRGB::Blue);
-  cloud.attachUpdateFunction(INTERVAL, blueSine);
+  cloud.attachUpdateFunction(INTERVAL, gradientSine);
 }
 
 void loop() {

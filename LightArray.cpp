@@ -39,11 +39,11 @@ void LightArray::update(void) {
 }
 
 void LightArray::setLight(int x, int y, CRGB color) {
-  if(y % 2) {
-    _leds[y*LEDS_PER_ROW + (LEDS_PER_ROW - 1 - x)] = color;
-  } else {
+  // if(y % 2) {
+  //   _leds[y*LEDS_PER_ROW + (LEDS_PER_ROW - 1 - x)] = color;
+  // } else {
     _leds[y*LEDS_PER_ROW + x] = color;
-  }
+  // }
 
 }
 // void LightArray::begin(void);

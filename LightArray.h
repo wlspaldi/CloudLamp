@@ -1,5 +1,5 @@
-#ifndef LIGHT_ARRAY
-#define LIGHT_ARRAY
+#ifndef LIGHT_ARRAY_H
+#define LIGHT_ARRAY_H
 
 #include <FastLED.h>
 #include "constants.h"
