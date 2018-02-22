@@ -4,38 +4,35 @@ void lightning(void);
 void clearStrip(void);
 void callback(void);
 
-// int _updateInterval, tick, progress;
 CRGB leds[NUM_LEDS];
-// void (*_f)(int);
-// CRGB * leds;
-//                       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49
-//CRGB storm1[NUM_LEDS] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-LightArray cloud(TIMER_TICK_IN_MS, 1, 13, leds);
-int index;
+LightArray cloud(TIMER_TICK_IN_MS, ROWS_OF_LEDS, LEDS_PER_ROW, leds);
 
 void timerCallback(void) {
-  clearStrip();
-  leds[index] = CRGB::Yellow;
-  index = (index + 1) % NUM_LEDS;
+  cloud.update();
+  Serial.print("Press any key: ");
 }
 
-CRGB sineAssign(int x, int y) {
-  sine
+CRGB blueSine(int x, int y, int progress) {
+  CRGB newColor;
+  float prog = 2*(float)(progress + (X_OFFSET * x))/ (float)INTERVAL;
+  float sine = 64*sin(3.14 * prog) + 64;
+  newColor.blue = (int)sine;
+  return newColor;
+}
+
+CRGB gradientSine(int x, int y, int progress) {
+
 }
 
 void setup() {
-  // progress = 0;
-  // tick = TIMER_TICK_IN_MS;
-  // _updateInterval = TIMER_TICK_IN_MS * 5;
-  // put your setup code here, to run once:
-  //index = 0;
-  //leds = cloud.getArray();
+  Serial.begin(115200);
   FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
 
-  // MsTimer2::set(500, timerCallback); // 5ms period
-  // MsTimer2::start();
+  MsTimer2::set(TIMER_TICK_IN_MS, timerCallback); // 5ms period
+  MsTimer2::start();
   //clearStrip();
-  cloud.initializeAllSame(CRGB::Orange);
+  cloud.initializeAllSame(CRGB::Blue);
+  cloud.attachUpdateFunction(INTERVAL, blueSine);
 }
 
 void loop() {
@@ -44,8 +41,6 @@ void loop() {
   FastLED.show();
   // lightning();
   // sunrise(10);
-   delay(5000);
-   clearStrip();
 }
 
 
@@ -85,67 +80,67 @@ void fadeAllToBlack(int interval) {
     delay(interval);
   }
 }
-
-void lightning(void) {
-  clearStrip();
-  assignRange(0, 10, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(35, 42, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(20, 36, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(40, 42, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(2, 28, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(38, 49, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(0, 49, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(0, 49, 100, 100, 100);
-  FastLED.show();
-  delay(100);
-  clearStrip();
-  FastLED.show();
-  delay(100);
-  assignRange(0, 49, 200, 200, 200);
-  FastLED.show();
-  fadeAllToBlack(10);
-  clearStrip();
-  FastLED.show();
-}
-
-void sunrise(int interval) {
-
-}
+//
+// void lightning(void) {
+//   clearStrip();
+//   assignRange(0, 10, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(35, 42, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(20, 36, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(40, 42, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(2, 28, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(38, 49, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(0, 49, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(0, 49, 100, 100, 100);
+//   FastLED.show();
+//   delay(100);
+//   clearStrip();
+//   FastLED.show();
+//   delay(100);
+//   assignRange(0, 49, 200, 200, 200);
+//   FastLED.show();
+//   fadeAllToBlack(10);
+//   clearStrip();
+//   FastLED.show();
+// }
+//
+// void sunrise(int interval) {
+//
+// }
 
 
 ////////////////////////////////////////////////////////////

@@ -16,7 +16,7 @@ CFLAGS_STD = -std=gnu11
 CXXFLAGS_STD = -std=gnu++11
 # CXXFLAGS += -pedantic -Wall -Wextra
 
-#MONITOR_PORT = /dev/ttyACM0
+# MONITOR_PORT = /dev/ttyS4
 ISP_PORT = /dev/ttyACM0
 
 # LIB = \

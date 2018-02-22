@@ -5,8 +5,8 @@
 #include <MsTimer2.h>
 #include "LightArray.h"
 #include "constants.h"
+#include "math.h"
 
-CRGB sineAssign(int x, int y)
-
+CRGB blueSine(int x, int y, int progress);
 
 #endif
