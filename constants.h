@@ -5,4 +5,4 @@
 #define TIMER_TICK_IN_MS 5
 #define DATA_PIN 11
 #define INTERVAL 2000
-#define X_OFFSET 50
+#define X_OFFSET 10

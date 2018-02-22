@@ -4,12 +4,14 @@ void lightning(void);
 void clearStrip(void);
 void callback(void);
 
+int count = 0;
+
 CRGB leds[NUM_LEDS];
 LightArray cloud(TIMER_TICK_IN_MS, ROWS_OF_LEDS, LEDS_PER_ROW, leds);
 
 void timerCallback(void) {
   cloud.update();
-  Serial.print("Press any key: ");
+  count++;
 }
 
 CRGB blueSine(int x, int y, int progress) {
@@ -26,19 +28,18 @@ CRGB gradientSine(int x, int y, int progress) {
   CRGB second = CRGB::Orange;
   float prog = 2 * (float)(progress + (X_OFFSET * x)) / (float)INTERVAL;
   float sine = 0.5 * (sin(3.14 * prog) + 1);
-  newColor.red = (first.red * sine + second.red * (1 - sine)) * 0.5;
-  newColor.green = (first.green * sine + second.green * (1 - sine)) * 0.5;
-  newColor.blue = (first.blue * sine + second.blue * (1 - sine)) * 0.5;
+  newColor.red = (first.red * sine + second.red * (1 - sine)) * 0.25;
+  newColor.green = (first.green * sine + second.green * (1 - sine)) * 0.25;
+  newColor.blue = (first.blue * sine + second.blue * (1 - sine)) * 0.25;
   return newColor;
 }
 
 void setup() {
-  Serial.begin(115200);
   FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
 
   MsTimer2::set(TIMER_TICK_IN_MS, timerCallback); // 5ms period
   MsTimer2::start();
-  //clearStrip();
+
   cloud.initializeAllSame(CRGB::Blue);
   cloud.attachUpdateFunction(INTERVAL, gradientSine);
 }

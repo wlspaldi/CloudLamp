@@ -6,9 +6,12 @@
 
 class Light {
   public:
-    Light(int x, int y);
+    Light(int tick, int x, int y);
+    void initializeProgress(int progress);
     void attachLED(CRGB * LED);
+    void attachUpdateFunction(int updateInterval, CRGB (*f)(int x, int y, int progress));
     void update(void);
+    void set(CRGB color);
     int red;
     int blue;
     int green;
@@ -16,8 +19,10 @@ class Light {
     CRGB (*_f)(int, int, int);
     int _x;
     int _y;
+    int _tick;
     int _progress;
-    CRGB currentColor;
+    int _updateInterval;
+    CRGB * _currentColor;
 };
 
 #endif
