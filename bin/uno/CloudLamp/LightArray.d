@@ -47,4 +47,5 @@
  /home/luke/Arduino/libraries//FastLED-3.1.8/power_mgt.h \
  /home/luke/Arduino/libraries//FastLED-3.1.8/fastspi.h \
  /home/luke/Arduino/libraries//FastLED-3.1.8/fastspi_bitbang.h \
- /home/luke/Arduino/libraries//FastLED-3.1.8/chipsets.h constants.h
+ /home/luke/Arduino/libraries//FastLED-3.1.8/chipsets.h constants.h \
+ Light.h

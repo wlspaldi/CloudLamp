@@ -34,6 +34,16 @@ CRGB gradientSine(int x, int y, int progress) {
   return newColor;
 }
 
+CRGB twinkle(int x, int y, int progress) {
+  CRGB newColor;
+  float prog = 2*(float)progress / ((float)INTERVAL / 2);
+  float sine = 64*sin(3.14 * prog) + 64;
+  newColor.blue = (int)sine;
+  newColor.red = (int)sine;
+  newColor.green = (int)sine;
+  return newColor;
+}
+
 void setup() {
   FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
 
@@ -41,7 +51,7 @@ void setup() {
   MsTimer2::start();
 
   cloud.initializeAllSame(CRGB::Blue);
-  cloud.attachUpdateFunction(INTERVAL, gradientSine);
+  cloud.attachUpdateFunctiontoAll(INTERVAL, blueSine);
 }
 
 void loop() {

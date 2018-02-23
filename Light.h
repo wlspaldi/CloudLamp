@@ -6,7 +6,9 @@
 
 class Light {
   public:
-    Light(int tick, int x, int y);
+    //Light(int tick, int x, int y, CRGB * led);
+    void initLight(int tick, int x, int y, CRGB * led);
+    void setTick(int tick);
     void initializeProgress(int progress);
     void attachLED(CRGB * LED);
     void attachUpdateFunction(int updateInterval, CRGB (*f)(int x, int y, int progress));

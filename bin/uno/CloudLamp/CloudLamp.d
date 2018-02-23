@@ -49,4 +49,4 @@
  /home/luke/Arduino/libraries//FastLED-3.1.8/fastspi_bitbang.h \
  /home/luke/Arduino/libraries//FastLED-3.1.8/chipsets.h \
  /home/luke/Arduino/libraries//MsTimer2/MsTimer2.h LightArray.h \
- constants.h
+ constants.h Light.h
