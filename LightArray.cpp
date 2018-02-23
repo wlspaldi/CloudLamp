@@ -46,6 +46,29 @@ void LightArray::attachUpdateFunctiontoOne(int x, int y, int updateInterval, CRG
   }
 }
 
+void LightArray::attachUpdateFunctiontoRange(int startingX, int endingX, int startingY, int endingY, int updateInterval, CRGB (*f)(int x, int y, int progress)) {
+  for(int j = startingX; j <= endingX; j++) {
+    for(int i = startingY; i <= endingY; i++) {
+      if(i % 2) {
+        _lights[i*LEDS_PER_ROW + (LEDS_PER_ROW - j - 1)].attachUpdateFunction(updateInterval, f);
+      } else {
+        _lights[i*LEDS_PER_ROW + j].attachUpdateFunction(updateInterval, f);
+      }
+    }
+  }
+}
+
+void LightArray::startEvent(int startingX, int endingX, int startingY, int endingY, int duration, CRGB (*f)(int x, int y, int progress)) {
+  for(int j = startingX; j <= endingX; j++) {
+    for(int i = startingY; i <= endingY; i++) {
+      if(i % 2) {
+        _lights[i*LEDS_PER_ROW + (LEDS_PER_ROW - j - 1)].startEvent(duration, f);
+      } else {
+        _lights[i*LEDS_PER_ROW + j].startEvent(duration, f);
+      }
+    }
+  }
+}
 
 void LightArray::update(void) {
   for(int i = 0; i < _numberOfLEDs; i++) {
@@ -59,7 +82,22 @@ void LightArray::setLight(int x, int y, CRGB color) {
   } else {
     _lights[y*LEDS_PER_ROW + x].set(color);
   }
+}
 
+void LightArray::setProgress(int x, int y, int progress) {
+  if(y % 2) {
+    _lights[y*LEDS_PER_ROW + (LEDS_PER_ROW - 1 - x)].setProgress(progress);
+  } else {
+    _lights[y*LEDS_PER_ROW + x].setProgress(progress);
+  }
+}
+
+int LightArray::getProgress(int x, int y){
+  if(y % 2) {
+    return _lights[y*LEDS_PER_ROW + (LEDS_PER_ROW - 1 - x)].getProgress();
+  } else {
+    return _lights[y*LEDS_PER_ROW + x].getProgress();
+  }
 }
 // void LightArray::begin(void);
 // void LightArray::stop(void);

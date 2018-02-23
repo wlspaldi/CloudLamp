@@ -13,7 +13,11 @@ class LightArray
     void initializeAllFromFunction(CRGB (*fx)(int x, int y));
     void attachUpdateFunctiontoAll(int updateInterval, CRGB (*f)(int x, int y, int progress));
     void attachUpdateFunctiontoOne(int x, int y, int updateInterval, CRGB (*f)(int x, int y, int progress));
+    void attachUpdateFunctiontoRange(int startingX, int endingX, int startingY, int endingY, int updateInterval, CRGB (*f)(int x, int y, int progress));
     void setLight(int x, int y, CRGB color);
+    void startEvent(int startingX, int endingX, int startingY, int endingY, int duration, CRGB (*f)(int x, int y, int progress));
+    int getProgress(int x, int y);
+    void setProgress(int x, int y, int progress);
     void update(void);
     void begin(void);
     void stop(void);
